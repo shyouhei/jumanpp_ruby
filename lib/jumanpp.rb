@@ -110,17 +110,22 @@ class Jumanpp
         fp.puts(preprocess(l))
         fp.flush
         a = take_until_eos(fp)
-        a.map! {|i| parse_line(i) }
-        yield a.slice_before {|i| i.size == 12 }.map {|i|
-          i.each {|j| j.shift if j[0] == '@' }
-          i.uniq!
-          case i.length when 1 then
-            next Morpheme.new(*i[0])
-          else
-            i.map! {|j| Morpheme.new(*j) }
-            next i
-          end
-        }
+        a.reject! {|i| i == "\n" }
+        if a.empty?
+          yield []
+        else
+          a.map! {|i| parse_line(i) }
+          yield a.slice_before {|i| i.size == 12 }.map {|i|
+            i.each {|j| j.shift if j[0] == '@' }
+            i.uniq!
+            case i.length when 1 then
+              next Morpheme.new(*i[0])
+            else
+              i.map! {|j| Morpheme.new(*j) }
+              next i
+            end
+          }
+        end
       end
     end
     return self
@@ -142,10 +147,10 @@ class Jumanpp
   end
 
   def take_until_eos(fp)
-    return fp                         \
-      .each_line                      \
-      .lazy                           \
-      .take_while {|i| /^EOS$/ !~ i } \
+    return fp                            \
+      .each_line                         \
+      .lazy                              \
+      .take_while {|i| /^(EOS)?$/ !~ i } \
       .force
   end
 

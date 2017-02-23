@@ -77,4 +77,26 @@ describe Jumanpp do
       end
     end
   end
+
+  context 'given empty input' do
+    subject { Jumanpp.new.split '' }
+    it      { should be_kind_of(Array) }
+    it      { should be_empty }
+  end
+
+  context 'given empty line' do
+    subject    { Jumanpp.new.split "\n" }
+    it         { should be_kind_of(Array) }
+    its(:size) { should eq(1) }
+    it         { should all( be_kind_of(Array).and(
+                             be_empty)) }
+  end
+
+  context 'given empty lines' do
+    subject    { Jumanpp.new.split "\n\n" }
+    it         { should be_kind_of(Array) }
+    its(:size) { should eq(2) }
+    it         { should all( be_kind_of(Array).and(
+                             be_empty)) }
+  end
 end
