@@ -100,3 +100,57 @@ describe Jumanpp do
                              be_empty)) }
   end
 end
+
+describe Jumanpp::Morpheme do
+  let(:line)         { 'q w e r t y u i o p a s' }
+  subject            { Jumanpp::Morpheme.new(*line.split(' ')) }
+  it                 { should be_a(Jumanpp::Morpheme) }
+  its(:s1)           { should eq('q') }
+  its(:s2)           { should eq('w') }
+  its(:s3)           { should eq('e') }
+  its(:s4)           { should eq('s') }
+  its(:c1)           { should eq('r') }
+  its(:c1_id)        { should eq('t') }
+  its(:c2)           { should eq('y') }
+  its(:c2_id)        { should eq('u') }
+  its(:k1)           { should eq('i') }
+  its(:k1_id)        { should eq('o') }
+  its(:k2)           { should eq('p') }
+  its(:k2_id)        { should eq('a') }
+  its(:to_str)       { should eq('q') }
+  its(:to_s)         { should eq('q') }
+  its(:surface)      { should eq('q') }
+  its(:reading)      { should eq('w') }
+  its(:sound)        { should eq('w') }
+  its(:base)         { should eq('e') }
+  its(:lemma)        { should eq('e') }
+  its(:info)         { should eq('s') }
+  its(:imis)         { should eq('s') }
+  its(:pos)          { should eq('r') }
+  its(:pos_id)       { should eq('t') }
+  its(:spos)         { should eq('y') }
+  its(:spos_id)      { should eq('u') }
+  its(:form)         { should eq('i') }
+  its(:form_id)      { should eq('o') }
+  its(:form_type)    { should eq('p') }
+  its(:form_type_id) { should eq('a') }
+  its(:JUMAN_form)   { should eq(line) }
+
+  context 'NULL passed' do
+    let(:line)  { 'q w e * 0 * 0 * 0 * 0 NIL' }
+    subject     { Jumanpp::Morpheme.new(*line.split(' ')) }
+    it          { should be_a(Jumanpp::Morpheme) }
+    its(:s1)    { should eq('q') }
+    its(:s2)    { should eq('w') }
+    its(:s3)    { should eq('e') }
+    its(:s4)    { should be_nil }
+    its(:c1)    { should be_nil }
+    its(:c1_id) { should be_nil }
+    its(:c2)    { should be_nil }
+    its(:c2_id) { should be_nil }
+    its(:k1)    { should be_nil }
+    its(:k1_id) { should be_nil }
+    its(:k2)    { should be_nil }
+    its(:k2_id) { should be_nil }
+  end
+end

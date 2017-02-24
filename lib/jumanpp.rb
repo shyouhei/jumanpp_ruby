@@ -46,6 +46,19 @@ class Jumanpp
     :s4
   ) do
 
+    def initialize(s1, s2, s3, c1, c1_id, c2, c2_id, k1, k1_id, k2, k2_id, s4)
+      c1    = nil if c1    == '*'
+      c2    = nil if c2    == '*'
+      k1    = nil if k1    == '*'
+      k2    = nil if k2    == '*'
+      c1_id = nil if c1_id == '0'
+      c2_id = nil if c2_id == '0'
+      k1_id = nil if k1_id == '0'
+      k2_id = nil if k2_id == '0'
+      s4    = nil if s4    == 'NIL'
+      super(s1, s2, s3, c1, c1_id, c2, c2_id, k1, k1_id, k2, k2_id, s4)
+    end
+
     alias to_str       s1
     alias to_s         s1
     alias surface      s1
